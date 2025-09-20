@@ -1,0 +1,52 @@
+import AllBrand from '@/Api/AllBrandApi';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { categoryType } from '@/Types/category.type';
+import Image from 'next/image';
+import React from 'react'
+
+export default async function Categories() {
+  const res = await AllBrand()
+  console.log(res);
+  
+  return (
+    <>
+      <div className="container w-[90%] lg:w-[80%] mx-auto my-8">
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-gray-100 mb-8 text-center">
+          Brands
+        </h2>
+
+        <div className="flex flex-wrap justify-center gap-6">
+          {res.map((prod: categoryType) => (
+            <div 
+              key={prod._id} 
+              className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5"
+            >
+              <Card className="rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 
+                bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                
+                <CardHeader className="flex justify-center pt-6">
+                  <div className="w-[160px] h-[160px] rounded-full overflow-hidden border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+                    <Image 
+                      src={prod.image} 
+                      width={160} 
+                      height={160} 
+                      alt={prod.name} 
+                      className="w-[80%] h-[80%] object-contain"
+                    />
+                  </div>
+                </CardHeader>
+
+                <CardContent>
+                  <p className="text-center text-lg sm:text-xl font-semibold 
+                    text-gray-800 dark:text-gray-100 mt-4">
+                    {prod.name}
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
+  )
+}
