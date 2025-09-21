@@ -68,15 +68,12 @@ export default function WishlistPage() {
       </h1>
     );
   }
-  if (Data.length === 0) {
-    return (
-      <div className="flex items-center justify-center h-64 text-gray-500 text-lg">
-        💔 Your wishlist is empty
-      </div>
-    );
-  }
+   
  return (
-    <div className="container w-[90%] lg:w-[80%] mx-auto my-10">
+  <>
+  {Data.length === 0? <> <div className="flex items-center justify-center h-64 text-gray-500 text-lg">
+        💔 Your wishlist is empty
+      </div></> : <> <div className="container w-[90%] lg:w-[80%] mx-auto my-10">
       <h2 className="text-3xl font-bold text-emerald-600 mb-8 text-center">
         All Products
       </h2>
@@ -134,6 +131,7 @@ export default function WishlistPage() {
           </Card>
         ))}
       </div>
-    </div>
+    </div></>}
+    </>
   )
 }

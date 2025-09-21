@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useContext, useState } from "react";
- import { Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import img1 from "../../../public/images/freshcart-logo.svg";
 import Image from "next/image";
@@ -19,15 +19,18 @@ export default function Navbar() {
     signOut({ callbackUrl: "/Login" });
   }
 
-  const navLinks = [
+  // 🔹 روابط ثابتة
+  const baseLinks = [
     { href: "/", label: "Home" },
     { href: "/Products", label: "Products" },
     { href: "/Categories", label: "Categories" },
     { href: "/Brands", label: "Brands" },
-    { href: "/allorders", label: "Orders" },
-    { href: "/wishList", label: "wishList" },
+  ];
 
-    // 🔴 Wishlist اتشالت
+  // 🔹 روابط خاصة باليوزر المسجل فقط
+  const protectedLinks = [
+    { href: "/allorders", label: "Orders" },
+    { href: "/wishList", label: "Wishlist" },
   ];
 
   return (
@@ -42,7 +45,7 @@ export default function Navbar() {
 
           {/* Desktop Links */}
           <div className="hidden md:flex gap-6">
-            {navLinks.map(({ href, label }) => (
+            {baseLinks.map(({ href, label }) => (
               <Link
                 key={href}
                 href={href}
@@ -55,6 +58,21 @@ export default function Navbar() {
                 {label}
               </Link>
             ))}
+
+            {session &&
+              protectedLinks.map(({ href, label }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  className={`relative ${
+                    path === href
+                      ? "text-yellow-300 font-semibold"
+                      : "text-white hover:text-yellow-200"
+                  }`}
+                >
+                  {label}
+                </Link>
+              ))}
 
             {session && (
               <Link
@@ -116,7 +134,7 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {open && (
         <div className="md:hidden bg-gray-50 dark:bg-gray-800 p-4 flex flex-col gap-4">
-          {navLinks.map(({ href, label }) => (
+          {baseLinks.map(({ href, label }) => (
             <Link
               key={href}
               href={href}
@@ -130,6 +148,22 @@ export default function Navbar() {
               {label}
             </Link>
           ))}
+
+          {session &&
+            protectedLinks.map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                onClick={() => setOpen(false)}
+                className={`${
+                  path === href
+                    ? "text-emerald-600 font-semibold"
+                    : "text-gray-700 dark:text-gray-200 hover:text-emerald-500"
+                }`}
+              >
+                {label}
+              </Link>
+            ))}
 
           {!session ? (
             <>

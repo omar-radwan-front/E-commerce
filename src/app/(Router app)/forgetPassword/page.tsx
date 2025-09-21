@@ -32,13 +32,13 @@ export default function ForgetPassword() {
       const res = await forgetPasswordAction(values.email);
       console.log(res);
 
-      if (res?.status === "success") {
+      if (res?.statusMsg === "success") {
         toast.success("Verification code sent to your email", {
           position: 'top-center',
           duration: 3000,
         })
         // ✅ التوجيه الصحيح لصفحة التحقق من الكود
-        router.push('/verify');
+        router.push('/verify-code');
       } else {
         toast.error(res?.message || "Something went wrong", {
           position: 'top-center',

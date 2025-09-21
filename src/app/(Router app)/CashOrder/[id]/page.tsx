@@ -32,7 +32,7 @@ export default function CashOrder() {
           position: 'top-center',
           duration: 3000
         })
-        window.location.href = "/cart"
+        window.location.href = "/allorders"
       }
     } catch (error) {
       console.log(error);

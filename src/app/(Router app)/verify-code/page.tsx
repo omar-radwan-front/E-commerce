@@ -23,10 +23,10 @@ export default function VerifyCode() {
 
       const data = await res.json();
       if (data.status === "Success") {
-        toast.success("Code verified successfully");
+        toast.success("Code verified successfully",{position:"top-center",duration:3000});
         router.push("/reset-password");
       } else {
-        toast.error(data.message || "Invalid code");
+        toast.error(data.message || "Invalid code",{position:"top-center",duration:3000});
       }
     } catch (err) {
       toast.error("err");

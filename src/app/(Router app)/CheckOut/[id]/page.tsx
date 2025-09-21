@@ -40,7 +40,8 @@ export default function CheckOut() {
       const res = await onlinePayment(id, "", values);
 
       toast.dismiss();
-
+            console.log(res);
+            
       if (res.status === "success") {
         toast.success("Redirecting to payment...",{position:"top-center", duration:3000});
         window.location.href = res.session.url;

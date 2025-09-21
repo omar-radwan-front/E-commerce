@@ -12,7 +12,12 @@ export default async function onlinePayment(
   if (!token) throw new Error("Login first");
 
   // خلي الدفع يرجع على صفحة الطلبات
-  const callbackUrl = `${url}/allorders`;
+  const baseUrl =
+    process.env.NODE_ENV === "production"
+      ? "https://e-commerce-jet-ten-91.vercel.app"
+      : "http://localhost:3000";
+
+  const callbackUrl = `${baseUrl}`;
 
   const res = await fetch(
     `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=${callbackUrl}`,
@@ -29,5 +34,6 @@ export default async function onlinePayment(
   );
 
   const payload = await res.json();
+  console.log("Checkout API Response:", payload);
   return payload;
 }

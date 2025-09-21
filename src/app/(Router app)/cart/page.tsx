@@ -21,6 +21,9 @@ export default function Cart() {
   const [CuruntId, setCuruntId] = useState("");
   const { NumberOfCartItem, setNumberOfCartItem } = useContext(cartContext);
   const [CartId, setCartId] = useState("");
+ const [clearLoading, setClearLoading] = useState(false);
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
+  const [cashLoading, setCashLoading] = useState(false);
 
   async function CheckGetUserCart() {
     try {
@@ -98,18 +101,27 @@ export default function Cart() {
   }
 
   async function ClearAllProduct() {
+        setClearLoading(true);
+
     const res = await ClearCart();
     if (res.message === "success") {
       setProducts([]);
+     setNumberOfCartItem(0);
+
+
       toast.success("Cleared successfully 🎉", {
         position: 'top-center',
         duration: 3000,
       });
+            CheckGetUserCart();
+
     } else {
       toast.error("Not Cleared !", {
         position: 'top-center',
         duration: 3000,
       });
+          setClearLoading(false);
+
     }
   }
 
@@ -136,8 +148,13 @@ export default function Cart() {
                 className="bg-red-600 px-4 py-2 rounded-xl text-white font-semibold text-lg 
                 hover:bg-red-700 transition disabled:opacity-60"
               >
-                Clear Cart
-              </button>
+             {clearLoading ? (
+                <span className="flex items-center gap-2">
+                  <i className="fas fa-spinner fa-spin"></i> Clearing...
+                </span>
+              ) : (
+                "Clear Cart"
+              )}              </button>
             </div>
 
             <h2 className="text-2xl font-bold text-center mb-4 text-gray-800 dark:text-gray-100">
@@ -232,14 +249,34 @@ export default function Cart() {
 
             <div className="flex flex-wrap justify-center gap-4 p-6">
               <Link href={`/CheckOut/${CartId}`}>
-                <button className="bg-green-600 px-6 py-2 rounded-xl text-white font-semibold text-lg hover:bg-green-700 transition">
-                  Checkout Online
-                </button>
-              </Link>
-              <Link href={`/CashOrder/${CartId}`}>
-                <button className="bg-blue-600 px-6 py-2 rounded-xl text-white font-semibold text-lg hover:bg-blue-700 transition">
-                  Cash Order Now!
-                </button>
+                 <button
+                onClick={() => setCheckoutLoading(true)}
+                disabled={checkoutLoading}
+                className="bg-green-600 px-6 py-2 rounded-xl text-white font-semibold text-lg hover:bg-green-700 transition disabled:opacity-60"
+              >
+                {checkoutLoading ? (
+                  <span className="flex items-center gap-2">
+                    <i className="fas fa-spinner fa-spin"></i> Processing...
+                  </span>
+                ) : (
+                  "Checkout Online"
+                )}
+              </button>
+            </Link>
+            <Link href={`/CashOrder/${CartId}`}>
+              <button
+                onClick={() => setCashLoading(true)}
+                disabled={cashLoading}
+                className="bg-blue-600 px-6 py-2 rounded-xl text-white font-semibold text-lg hover:bg-blue-700 transition disabled:opacity-60"
+              >
+                {cashLoading ? (
+                  <span className="flex items-center gap-2">
+                    <i className="fas fa-spinner fa-spin"></i> Processing...
+                  </span>
+                ) : (
+                  "Cash Order Now!"
+                )}
+              </button>
               </Link>
             </div>
           </div>
