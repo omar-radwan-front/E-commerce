@@ -29,7 +29,8 @@ export default function WishlistPage() {
     if(res.status === "success"){
       setData(res.data)
     }
-    
+            setisLoading(false);
+
   }
 
 
@@ -50,6 +51,8 @@ export default function WishlistPage() {
           position: 'top-center',
           duration: 3000,
         });
+                setisLoading(false);
+
       }
      }
   
@@ -57,6 +60,14 @@ export default function WishlistPage() {
   useEffect(()=>{
     getUserProductWish()
   },[]);
+  
+  if (isLoading) {
+    return (
+      <h1 className="text-4xl text-center font-bold my-12 text-gray-700 dark:text-gray-200">
+        Loading... <i className="fas fa-spinner fa-spin"></i>
+      </h1>
+    );
+  }
   if (Data.length === 0) {
     return (
       <div className="flex items-center justify-center h-64 text-gray-500 text-lg">

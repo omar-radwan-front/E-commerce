@@ -215,15 +215,15 @@ export default function Cart() {
                     <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
                       {prod.price * prod.count} EGP
                     </td>
-                    <td className="px-6 py-4 flex gap-2">
-                      <button
+                    <td className="px-6 py-4 ">
+               <div className='flex gap-2'>       <button
                         disabled={RemoveDisable}
                         onClick={() => deleteProduct(prod.product.id)}
                         className="text-red-600 dark:text-red-400 font-medium hover:underline disabled:opacity-50"
                       >
                         Remove
                       </button>
-                      <AddBtnWish id={prod.product.id}/>
+                      <AddBtnWish id={prod.product.id}/></div>
                     </td>
                   </tr>
                 ))}

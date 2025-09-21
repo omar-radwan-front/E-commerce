@@ -2,7 +2,7 @@
 
 import { jwtDecode } from "jwt-decode";
 import { cookies } from "next/headers";
- 
+
 interface Order {
   _id: string;
   totalPrice: number;
@@ -21,7 +21,7 @@ interface TokenPayload {
 }
 
 export default async function AllOrdersPage() {
-  const cookieStore = await cookies(); // لازم await
+  const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
 
   if (!token) return <p>Please login first</p>;
@@ -38,9 +38,16 @@ export default async function AllOrdersPage() {
 
   return (
     <div className="min-h-screen p-6 bg-gray-100 dark:bg-gray-900">
-      <h1 className="text-2xl font-bold text-center mb-6 text-sky-700 dark:text-sky-400">
+      <h1 className="text-2xl font-bold text-center mb-2 text-sky-700 dark:text-sky-400">
         All Orders
       </h1>
+
+      {/* ✅ رسالة نجاح الدفع */}
+      <div className="text-center mb-6">
+        <p className="inline-block px-4 py-2 bg-green-100 text-green-800 rounded-lg shadow">
+          ✅ Payment successful! Here are your orders.
+        </p>
+      </div>
 
       {orders.length === 0 ? (
         <p className="text-center text-gray-600 dark:text-gray-300">No orders found.</p>
