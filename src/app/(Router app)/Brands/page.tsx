@@ -2,6 +2,7 @@ import AllBrand from '@/Api/AllBrandApi';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { categoryType } from '@/Types/category.type';
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react'
 
 export default async function Categories() {
@@ -23,7 +24,8 @@ export default async function Categories() {
             >
               <Card className="rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 
                 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
-                
+                  <Link href={`/Brands/${prod._id}`}>
+
                 <CardHeader className="flex justify-center pt-6">
                   <div className="w-[160px] h-[160px] rounded-full overflow-hidden border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
                     <Image 
@@ -42,6 +44,7 @@ export default async function Categories() {
                     {prod.name}
                   </p>
                 </CardContent>
+                </Link>
               </Card>
             </div>
           ))}

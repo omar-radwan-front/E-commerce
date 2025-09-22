@@ -2,6 +2,7 @@ import Category from '@/Api/Category'
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { categoryType } from '@/Types/category.type';
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react'
 
 export default async function Categories() {
@@ -15,12 +16,13 @@ export default async function Categories() {
           Categories
         </h2>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-6">
           {res.map((prod: categoryType) => (
             <Card 
-              key={prod._id} 
-              className="rounded-xl shadow-md hover:shadow-xl transition-all duration-300 bg-white dark:bg-gray-900 cursor-pointer border-white hover:border-2 hover:border-green-400"
+            key={prod._id} 
+            className="rounded-xl shadow-md hover:shadow-xl transition-all duration-300 bg-white dark:bg-gray-900 cursor-pointer border-white hover:border-2 hover:border-green-400"
             >
+              <Link href={`/Categories/${prod._id}`}>
               <CardHeader>
                 {/* Fixed image container */}
                 <div className="w-full h-[200px] overflow-hidden rounded-lg">
@@ -38,9 +40,11 @@ export default async function Categories() {
                   {prod.name}
                 </p>
               </CardContent>
+              </Link>
             </Card>
           ))}
         </div>
+       
       </div>
     </>
   )

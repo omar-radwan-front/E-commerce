@@ -9,7 +9,7 @@ import AddBtnWishList from '../Btn/AddWish';
 
 export default async function AllProducts() {
   const data = await AllProductsApi();
-
+ if(data.length < 0)return<h1 className='text-2xl text-center text-red-500 '> No Products </h1>
   return (
     <div className="container w-[90%] lg:w-[80%] mx-auto my-10">
       <h2 className="text-3xl font-bold text-emerald-600 mb-8 text-center">

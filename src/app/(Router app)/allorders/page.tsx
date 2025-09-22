@@ -11,14 +11,19 @@ interface TokenPayload {
 
 export default async function AllOrdersPage() {
   const token = await getMyToken();
-  if (!token) return <p>Please login first</p>;
+  if (!token) return <p className="text-center mt-20">Please login first</p>;
 
   const { id }: TokenPayload = jwtDecode(token);
 
   const res = await fetch(
     `https://ecommerce.routemisr.com/api/v1/orders/user/${id}`
   );
-  const payload: Order[] = await res.json(); // ✅ هنا بقى واضح إنه Array of Orders
+  const payload: Order[] = await res.json();
+
+  // 🔹 ترتيب الطلبات من الجديد للأقدم
+  const sortedOrders = payload.sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  );
 
   return (
     <div className="min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
@@ -26,17 +31,18 @@ export default async function AllOrdersPage() {
         My Orders
       </h1>
 
-      {payload.length === 0 ? (
+      {sortedOrders.length === 0 ? (
         <p className="text-center text-gray-600 dark:text-gray-300">
           No orders found.
         </p>
       ) : (
         <div className="space-y-6 max-w-4xl mx-auto">
-          {payload.map((order) => (
+          {sortedOrders.map((order) => (
             <div
               key={order._id}
               className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 hover:shadow-xl transition"
             >
+              {/* Order Header */}
               <div className="flex justify-between items-center border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
                 <h2 className="font-semibold text-lg text-gray-800 dark:text-gray-200">
                   Order #{order._id.slice(-6)}
@@ -46,6 +52,7 @@ export default async function AllOrdersPage() {
                 </span>
               </div>
 
+              {/* Payment & Total */}
               <div className="flex justify-between items-center mb-4">
                 <p className="text-gray-700 dark:text-gray-300">
                   <span className="font-medium">Payment:</span>{" "}
@@ -57,6 +64,7 @@ export default async function AllOrdersPage() {
                 </p>
               </div>
 
+              {/* Products */}
               <div>
                 <h3 className="font-semibold text-gray-800 dark:text-gray-200 mb-3">
                   Products:

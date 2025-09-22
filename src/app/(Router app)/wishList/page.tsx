@@ -10,8 +10,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-// import { useWishlist } from "@/Context/WishlistContext";
-
+ 
 export default function WishlistPage() {
   const [Data, setData] = useState([])
   const [Products, setProducts] = useState([]);
@@ -22,8 +21,7 @@ export default function WishlistPage() {
     const [TotalPrice, setTotalPrice] = useState(0);
     const [CuruntId, setCuruntId] = useState("");
      const [CartId, setCartId] = useState("");
-  // const { wishlist, removeFromWishlist } = useWishlist();
-  async function getUserProductWish() {
+   async function getUserProductWish() {
     const res = await GetUserWish();
     console.log(res);
     if(res.status === "success"){
@@ -38,8 +36,7 @@ export default function WishlistPage() {
     async function deleteProduct(id: string) {
        const res = await RemoveProduct(id);
       if (res.status === "success") {
-        // setProducts(res.data.products);
-        console.log(res);
+         console.log(res);
         
         toast.success("Removed successfully 🎉", {
           position: 'top-center',

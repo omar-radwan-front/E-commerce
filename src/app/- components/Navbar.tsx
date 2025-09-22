@@ -4,10 +4,10 @@ import Link from "next/link";
 import { useContext, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
-import img1 from "../../../public/images/freshcart-logo.svg";
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
 import { cartContext } from "@/Context/CartContext";
+import img1 from "../../../public/images/freshcart-logo.svg";
 
 export default function Navbar() {
   const { NumberOfCartItem } = useContext(cartContext);
@@ -19,7 +19,6 @@ export default function Navbar() {
     signOut({ callbackUrl: "/Login" });
   }
 
-  // 🔹 روابط ثابتة
   const baseLinks = [
     { href: "/", label: "Home" },
     { href: "/Products", label: "Products" },
@@ -27,7 +26,6 @@ export default function Navbar() {
     { href: "/Brands", label: "Brands" },
   ];
 
-  // 🔹 روابط خاصة باليوزر المسجل فقط
   const protectedLinks = [
     { href: "/allorders", label: "Orders" },
     { href: "/wishList", label: "Wishlist" },
@@ -37,7 +35,7 @@ export default function Navbar() {
     <nav className="w-full bg-emerald-600 shadow-md sticky top-0 z-50 dark:bg-gray-900 dark:text-white">
       <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
         
-        {/* Logo */}
+        {/* Logo + Desktop Links */}
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center gap-2">
             <Image src={img1} alt="logo" className="h-8 w-auto" />
@@ -94,8 +92,8 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Right Section */}
-        <div className="hidden md:flex items-center gap-6">
+        {/* Right Section Desktop */}
+        <div className="hidden md:flex items-center md:gap-2 lg:gap-6">
           {!session ? (
             <>
               <Link href="/Register" className="text-white hover:text-yellow-200">Register</Link>
@@ -103,7 +101,7 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              <span className="text-white">Hi {session?.user.name}</span>
+              <span className="text-white ">Hi  {session?.user.name}</span> 
               <button
                 onClick={logout}
                 className="text-white hover:text-yellow-200 cursor-pointer"
@@ -165,18 +163,42 @@ export default function Navbar() {
               </Link>
             ))}
 
+          {session && (
+            <Link
+              href="/cart"
+              onClick={() => setOpen(false)}
+              className={`relative ${
+                path === "/cart"
+                  ? "text-emerald-600 font-semibold"
+                  : "text-gray-700 dark:text-gray-200 hover:text-emerald-500"
+              }`}
+            >
+              Cart
+              {NumberOfCartItem > 0 && (
+                <span className="absolute -top-2 -right-3 bg-sky-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                  {NumberOfCartItem}
+                </span>
+              )}
+            </Link>
+          )}
+
           {!session ? (
             <>
               <Link href="/Register" className="text-gray-700 dark:text-gray-200 hover:text-emerald-500">Register</Link>
               <Link href="/Login" className="text-gray-700 dark:text-gray-200 hover:text-emerald-500">Login</Link>
             </>
           ) : (
+            <>
             <button
               onClick={() => { logout(); setOpen(false); }}
               className="text-gray-700 dark:text-gray-200 hover:text-red-500 text-left"
             >
               Signout
             </button>
+              <span className="text-emerald-600">Hi <span className="text-2xl text-black">{session?.user.name}</span></span>
+
+            </>
+            
           )}
         </div>
       )}

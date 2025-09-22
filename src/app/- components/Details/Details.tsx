@@ -35,6 +35,7 @@ export default function Details({data}:{data:productType}) {
           </div>
 
           {/* Add to Cart Button */}
+          
           <AddBtn id={data.id} />
         </div>
       </div>

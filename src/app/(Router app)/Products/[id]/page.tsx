@@ -1,5 +1,6 @@
 import OneProduct from '@/Api/OneProduct';
 import AddBtn from '@/app/- components/Btn/AddBtn';
+import AddBtnWishList from '@/app/- components/Btn/AddWish';
 import Details from '@/app/- components/Details/Details';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import getRelatedProducts from '@/ProductCategoryAction/relatedProducts.action';
@@ -72,6 +73,8 @@ export default async function ProductDetails({ params }: { params: Promise<{ id:
 
                 {/* Add to Cart Button */}
                 <div className="mt-4">
+                                                      <AddBtnWishList id={prod.id}/>
+                  
                   <AddBtn id={prod.id} />
                 </div>
               </Card>
