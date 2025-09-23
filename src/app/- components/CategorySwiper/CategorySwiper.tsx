@@ -9,7 +9,7 @@ import { categoryType } from '@/Types/category.type';
 export default function CategorySwiper({ data }: { data: categoryType[] }) {
   return (
     <div className="container w-[95%] md:w-[85%] mx-auto mt-8">
-      <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6">
+      <h1 className=" md:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6">
         Shop Popular Categories
       </h1>
 
